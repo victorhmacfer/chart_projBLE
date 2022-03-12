@@ -28,25 +28,21 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-      var data = new google.visualization.DataTable();
-      data.addColumn('number');
-      data.addColumn('number');
+      // var data = new google.visualization.DataTable();
+      // data.addColumn('number');
+      // data.addColumn('number');
 
-
-      data.addRow([0, 0]);
-      data.addRow([716, 0]);
-      data.addRow([716, 870]);
-      data.addRow([0, 870]);
-
-      data.addRow([200, 200]);
+      // data.addRow([0, 0]);
+      // data.addRow([716, 0]);
+      // data.addRow([716, 870]);
+      // data.addRow([0, 870]);
+      // data.addRow([200, 200]);
 
       var options = {
-        // width: 350,
-        // height: 350,
         pointSize: 6,
         colors: ['#25d366'],
         animation: {
-          duration: 200,
+          duration: 300,
           easing: 'inAndOut',
         },
         hAxis: { minValue: 0, maxValue: 1000 },
@@ -55,31 +51,54 @@
 
       var chart = new google.visualization.ScatterChart(document.getElementById('scatter-chart'));
 
-      // Start the animation by listening to the first 'ready' event.
-      google.visualization.events.addOneTimeListener(chart, 'ready', randomWalk);
+      // // Start the animation by listening to the first 'ready' event.
+      // google.visualization.events.addOneTimeListener(chart, 'ready', fetchDataAndDraw);
 
       // Control all other animations by listening to the 'animationfinish' event.
-      google.visualization.events.addListener(chart, 'animationfinish', randomWalk);
+      google.visualization.events.addListener(chart, 'animationfinish', fetchDataAndDraw);
+
+      fetchDataAndDraw();
 
 
 
-      chart.draw(data, options);
+      async function fetchDataAndDraw() {
 
-      // function randomWalk() {
-      //   var x = data.getValue(data.getNumberOfRows() - 1, 0);
-      //   var y = data.getValue(data.getNumberOfRows() - 1, 1);
-      //   x += 5 * (Math.random() - 0.5);
-      //   y += 5 * (Math.random() - 0.5);
-      //   // if (x * x + y * y > radius * radius) {
-      //   //   // Out of bounds. Bump toward center.
-      //   //   x += Math.random() * ((x < 0) ? 5 : -5);
-      //   //   y += Math.random() * ((y < 0) ? 5 : -5);
-      //   // }
-      //   data.setValue(data.getNumberOfRows() - 1, 0, x);
-      //   data.setValue(data.getNumberOfRows() - 1, 1, y);
-      //   chart.draw(data, options);
-      // }
+        await delay(2);
+
+        let query = new google.visualization.Query(
+          'https://docs.google.com/spreadsheets/d/1QcVhyrTCqqyrPT7QTAoci9aQQG36quxhiVm2xXksF1s/gviz/tq?range=B2:C2');
+        query.send(handleResponse);
+      }
+
+      function handleResponse(response) {
+        if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+
+        var data = response.getDataTable();
+        chart.draw(data, options);
+      }
+
+
+
+
+
+
     }
+
+
+
+
+
+
+    function delay(n) {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, n * 1000);
+      });
+    }
+
+
   </script>
 </head>
 
