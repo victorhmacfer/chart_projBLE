@@ -1,0 +1,99 @@
+<html>
+
+<head>
+
+  <style>
+    .chartWithOverlay {
+      position: relative;
+      width: 50%;
+      height: 90%;
+      margin: auto;
+      /* background-color: #25d366; */
+    }
+
+    .overlay {
+      position: absolute;
+      opacity: 0.2;
+      margin: auto;
+      top: 186;
+      left: 132;
+
+    }
+  </style>
+
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number');
+      data.addColumn('number');
+
+
+      data.addRow([0, 0]);
+      data.addRow([716, 0]);
+      data.addRow([716, 870]);
+      data.addRow([0, 870]);
+
+      data.addRow([200, 200]);
+
+      var options = {
+        // width: 350,
+        // height: 350,
+        pointSize: 6,
+        colors: ['#25d366'],
+        animation: {
+          duration: 200,
+          easing: 'inAndOut',
+        },
+        hAxis: { minValue: 0, maxValue: 1000 },
+        vAxis: { minValue: 0, maxValue: 1000 },
+      };
+
+      var chart = new google.visualization.ScatterChart(document.getElementById('scatter-chart'));
+
+      // Start the animation by listening to the first 'ready' event.
+      google.visualization.events.addOneTimeListener(chart, 'ready', randomWalk);
+
+      // Control all other animations by listening to the 'animationfinish' event.
+      google.visualization.events.addListener(chart, 'animationfinish', randomWalk);
+
+
+
+      chart.draw(data, options);
+
+      // function randomWalk() {
+      //   var x = data.getValue(data.getNumberOfRows() - 1, 0);
+      //   var y = data.getValue(data.getNumberOfRows() - 1, 1);
+      //   x += 5 * (Math.random() - 0.5);
+      //   y += 5 * (Math.random() - 0.5);
+      //   // if (x * x + y * y > radius * radius) {
+      //   //   // Out of bounds. Bump toward center.
+      //   //   x += Math.random() * ((x < 0) ? 5 : -5);
+      //   //   y += Math.random() * ((y < 0) ? 5 : -5);
+      //   // }
+      //   data.setValue(data.getNumberOfRows() - 1, 0, x);
+      //   data.setValue(data.getNumberOfRows() - 1, 1, y);
+      //   chart.draw(data, options);
+      // }
+    }
+  </script>
+</head>
+
+<body>
+
+  <div class="chartWithOverlay">
+    <div id="scatter-chart" style="width: 700px; height: 700px"></div>
+
+    <div class="overlay">
+      <img src="./floor_plan_projeto_BLE.png" width="316">
+    </div>
+
+  </div>
+
+</body>
+
+</html>
