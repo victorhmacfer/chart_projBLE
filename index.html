@@ -28,15 +28,7 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-      // var data = new google.visualization.DataTable();
-      // data.addColumn('number');
-      // data.addColumn('number');
-
-      // data.addRow([0, 0]);
-      // data.addRow([716, 0]);
-      // data.addRow([716, 870]);
-      // data.addRow([0, 870]);
-      // data.addRow([200, 200]);
+      
 
       var options = {
         pointSize: 6,
@@ -60,11 +52,7 @@
       fetchDataAndDraw();
 
 
-
       async function fetchDataAndDraw() {
-
-        await delay(2);
-
         let query = new google.visualization.Query(
           'https://docs.google.com/spreadsheets/d/1QcVhyrTCqqyrPT7QTAoci9aQQG36quxhiVm2xXksF1s/gviz/tq?range=B2:C2');
         query.send(handleResponse);
@@ -75,6 +63,8 @@
           alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
           return;
         }
+
+        await delay(2);
 
         var data = response.getDataTable();
         chart.draw(data, options);
