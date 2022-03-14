@@ -8,7 +8,7 @@
       width: 50%;
       height: 90%;
       margin: auto;
-      background-color: #25d366;
+      /* background-color: #25d366; */
     }
 
     .overlay {
@@ -43,8 +43,8 @@
 
       var chart = new google.visualization.ScatterChart(document.getElementById('scatter-chart'));
 
-      // // Start the animation by listening to the first 'ready' event.
-      // google.visualization.events.addOneTimeListener(chart, 'ready', fetchDataAndDraw);
+      // Start the animation by listening to the first 'ready' event.
+      google.visualization.events.addOneTimeListener(chart, 'ready', fetchDataAndDraw);
 
       // Control all other animations by listening to the 'animationfinish' event.
       google.visualization.events.addListener(chart, 'animationfinish', fetchDataAndDraw);
@@ -69,8 +69,6 @@
         var data = response.getDataTable();
         chart.draw(data, options);
       }
-
-
 
 
 
