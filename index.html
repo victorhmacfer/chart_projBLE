@@ -52,13 +52,13 @@
       fetchDataAndDraw();
 
 
-      async function fetchDataAndDraw() {
+      function fetchDataAndDraw() {
         let query = new google.visualization.Query(
           'https://docs.google.com/spreadsheets/d/1QcVhyrTCqqyrPT7QTAoci9aQQG36quxhiVm2xXksF1s/gviz/tq?range=B2:C2');
         query.send(handleResponse);
       }
 
-      function handleResponse(response) {
+      async function handleResponse(response) {
         if (response.isError()) {
           alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
           return;
