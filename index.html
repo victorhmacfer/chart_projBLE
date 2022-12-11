@@ -67,6 +67,10 @@
         await delay(2);
 
         var data = response.getDataTable();
+
+        data.addRows([
+          [100, 100],
+        ]);
         chart.draw(data, options);
       }
 
