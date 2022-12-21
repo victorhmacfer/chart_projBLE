@@ -29,6 +29,8 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
+      
+      console.log("got inside drawChart()");
 
 
       var options = {
@@ -42,31 +44,59 @@
         hAxis: { minValue: 0, maxValue: 1000 },
         vAxis: { minValue: 0, maxValue: 1000 },
       };
+      
+      console.log("I just declared options");
 
       var chart = new google.visualization.ScatterChart(document.getElementById('scatter-chart'));
+      
+      console.log("just assigned chart");
 
       // Start the animation by listening to the first 'ready' event.
       google.visualization.events.addOneTimeListener(chart, 'ready', fetchDataAndDraw);
+      
+      console.log("added onetimelistener");
 
       // Control all other animations by listening to the 'animationfinish' event.
       google.visualization.events.addListener(chart, 'animationfinish', fetchDataAndDraw);
+      
+      console.log("before fetchDataAndDraw");
 
       fetchDataAndDraw();
+      
+      console.log("after fetchDataAndDraw");
+      
+      
 
 
       function fetchDataAndDraw() {
+        
+        console.log("got inside fetchDataAndDraw");
+        
+        
         let query = new google.visualization.Query(
           'https://docs.google.com/spreadsheets/d/1RlTtLT-Aw_TtFk9777EPAZIBhrZ1BJEx5HWdFk1I1tQ/gviz/tq?range=B2:C17');
+        
+        console.log("before query.send");
+        
+        
         query.send(handleResponse);
       }
 
       async function handleResponse(response) {
+        
+        console.log("inside handleResponse(resp)");
+        
+        
         if (response.isError()) {
           alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
           return;
         }
 
         await delay(2);
+        
+        console.log("before assigning data");
+        
+        
 
         var data = response.getDataTable();
 
@@ -75,6 +105,8 @@
 //         data.addRows([
 //           [330, 736, 'point { size: 5; fill-color: #a52714; }'],
 //         ]);
+        
+        console.log("before chart.draw()");
         chart.draw(data, options);
       }
 
