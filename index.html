@@ -99,11 +99,11 @@
 
         var data = response.getDataTable();
 
-//         data.addColumn({'type': 'string', 'role': 'style'});
+        data.addColumn({'type': 'string', 'role': 'style'});
 
-//         data.addRows([
-//           [330, 736, 'point { size: 5; fill-color: #a52714; }'],
-//         ]);
+        data.addRows([
+          [32, 736, 'point { size: 5; fill-color: #a52714; }'],
+        ]);
         
         console.log("before chart.draw()");
         chart.draw(data, options);
